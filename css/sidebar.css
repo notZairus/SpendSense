@@ -1,0 +1,111 @@
+body {
+  background-color: red;
+  height: 100dvh;
+  display: flex;
+  margin: 0px;
+}
+
+aside {
+  width: 350px;
+  background-color: green;
+  position: relative;
+  padding: 20px 20px;
+  box-sizing: border-box;
+  
+  transition: all 0.3s;
+}
+
+aside.collapse {
+  width: 100px;
+  padding: 20px 5px;
+}
+
+aside > img {
+  width: 40px;
+  position: absolute;
+  right: 20px;
+  transform: rotate(180deg);
+  z-index: 2;
+  
+  transition: all 0.3s;
+}
+
+aside > img.collapse {
+  transform: rotate(0deg);
+}
+
+aside > h1 {
+  font-family: "Oswald";
+  padding-top: 60px;
+  color: white;
+  font-size: 3rem;
+  margin: 0px;
+}
+
+aside > h1.collapse {
+  text-align: center;
+}
+
+aside .nav {
+  margin-top: 60px;
+  padding: 0px 20px;
+  list-style: none;
+  color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+aside .nav.collapse {
+  padding: 0px;
+}
+
+aside .nav li {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  height: 80px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 3px 30px;
+}
+
+.nav li .icon {
+  width: 2.5rem;
+}
+
+.nav li p {
+  margin: 0px;
+  font-size: 2rem;
+}
+
+.nav li p.collapse {
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+section {
+  width: calc(100% - 350px);
+  background-color: white;
+  height: 100%;
+}
+
+section.collapse {
+  width: calc(100% - 100px);
+}
