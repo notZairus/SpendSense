@@ -1,0 +1,114 @@
+body {
+  background-color: green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+}
+
+main {
+  width: min(98%, 500px);
+  background-color: white;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px 20px 40px;
+  box-sizing: 3px 3px 10px rgb(0, 0, 0, 0.10);
+}
+
+main form > h2 {
+  text-align: center;
+  font-size: 3rem;
+  margin: 0px;
+  margin-bottom: 2rem;
+  color: darkgreen;
+  font-family: "Oswald", "Work sans", sans-serif;
+}
+
+form .if-cont {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+}
+
+.if-cont .input-field {
+  width: 80%;
+  position: relative;
+}
+
+.input-field input {
+  width: 100%;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid lightgreen;
+  font-size: 2rem;
+  color: black;
+  padding: 5px 10px 0px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.input-field label {
+  position: absolute;
+  font-size: 2rem;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  color: rgb(73, 73, 73);
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.input-field input:focus + label, 
+.input-field input:valid + label {
+  font-size: 1rem;
+  top: -15px;
+  bottom: 45px;
+}
+
+form button, 
+button {
+  font-size: 2rem;
+  color: white;
+  background-color: green;
+  bordeR: none;
+  padding: 5px 40px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+form button:hover {
+  background-color: rgb(14, 145, 14);
+}
+
+form button:active {
+  background-color: darkgreen;
+}
+
+.divider {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.divider div {
+  width: auto;
+  height: 0.5px;
+  background-color: black;
+}
+
+.divider p {
+  text-align: center;
+  color: black;
+  align-self: center;
+}
+
+.register-btn-cont {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
