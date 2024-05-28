@@ -2,10 +2,13 @@
   include "./configs/connection.php";
   if (isset($_POST['register'])) {
 
+    $image = $_FILES['profile-pic']['tmp_name'];
+    $imageData = file_get_contents($image);
+    
     $hashed = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-    $cmd = $conn->prepare("INSERT INTO account_tbl (FirstName, MiddleName, LastName, Username, Pw) VALUES (?, ?, ?, ?, ?)");
-    $cmd->bind_param("sssss", $_POST['firstname'], $_POST['middlename'], $_POST['lastname'], $_POST['username'], $hashed);
+    $cmd = $conn->prepare("INSERT INTO account_tbl (FirstName, MiddleName, LastName, Username, Pw, ProfileImage) VALUES (?, ?, ?, ?, ?, ?)");
+    $cmd->bind_param("sssssb", $_POST['firstname'], $_POST['middlename'], $_POST['lastname'], $_POST['username'], $hashed, $imageData);
     $cmd->execute();
     
     $cmd->close();
@@ -27,9 +30,14 @@
 </head>
 <body>
   <main>
-    <form action="./signup.php" method="post">
+    <form action="./signup.php" method="post" enctype="multipart/form-data">
       <h2>Register</h2>
       <div class="if-cont">
+        <div class="profile-pic-cont">
+          <img src="../assets/notepad-svgrepo-com.svg" alt="" class="image-preview" id="image-preview">
+          <input type="file" name="profile-pic" id="profile-pic" style="display: none;">
+          <button type="button" class="select-img" id="select-img">Select Image</button>
+        </div>
         <div class="input-field">
           <input type="text" name="firstname" id="firstname" required>
           <label for="firstname">First Name</label>
@@ -69,5 +77,28 @@
       </button>
     </div>
   </main>
+  <script>
+
+    document.getElementById("select-img").addEventListener("click", (event) => {
+      let target = event.target;
+      document.getElementById("profile-pic").click();
+    });
+
+    document.getElementById("profile-pic").addEventListener("change", function (event) {
+      if (this.files < 0) {
+        return;
+      }
+
+      let selectedFile = this.files[0];
+      let reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+
+      reader.addEventListener("load", function (event) {
+        let imagePreview = document.getElementById("image-preview");
+        imagePreview.src = this.result;
+      })
+    })  
+
+  </script>
 </body>
 </html>

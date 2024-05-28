@@ -11,6 +11,7 @@ document.querySelector("aside").addEventListener("click", (event) => {
   target.classList.toggle("collapse");
   target.nextElementSibling.classList.toggle("collapse");
   target.nextElementSibling.nextElementSibling.classList.toggle("collapse");
+  document.querySelector(".user-profile .name").classList.toggle("collapse");
   document.querySelectorAll(".nav li p").forEach(element => {
     element.classList.toggle("collapse");
   })
@@ -21,4 +22,5 @@ document.querySelector("aside").addEventListener("click", (event) => {
   else {
     target.nextElementSibling.textContent = "SpendSense";
   }
+  
 })

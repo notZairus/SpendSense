@@ -1,5 +1,5 @@
 body {
-  background-color: red;
+  background-color: white;
   height: 100dvh;
   display: flex;
   margin: 0px;
@@ -88,10 +88,31 @@ aside .nav li {
   display: none;
 }
 
+.user-profile {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  gap: 20px;
+  align-items:center;
+}
 
+.user-profile .profile-pic {
+  background-color: wheat;
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+}
 
+.user-profile .name {
+  font-size: 1.8rem;
+  margin: 0px;
+  font-weight: 500;
+  color: white;
+}
 
-
+.user-profile .name.collapse {
+  display: none;
+}
 
 
 

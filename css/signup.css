@@ -4,7 +4,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100dvh;
+  padding: 30px 0px;
 }
 
 main {
@@ -111,4 +111,23 @@ form button:active {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.profile-pic-cont {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.image-preview {
+  width: 40%;
+  height: 40%;
+  border: 1px solid green;
+  border-radius: 10px;
+}
+
+.select-img {
+  font-size: 1rem;
 }

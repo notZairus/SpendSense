@@ -1,4 +1,5 @@
 <?php
+  session_start();
   include "./configs/connection.php";
 
   if (isset($_POST['login'])) {
@@ -12,7 +13,12 @@
       $row = $result->fetch_assoc();
 
       if (password_verify($_POST['password'], $row['Pw'])) {
-        header("Location: ./dashboard.html");
+        $_SESSION['AID'] = $row['AID'];
+        $_SESSION['Username'] = $row['Username'];
+        $_SESSION['Firstname'] = $row['FirstName'];
+        $_SESSION['Middlename'] = $row['Middlename'];
+        $_SESSION['Lastname'] = $row['LastName'];
+        header("Location: ./dashboard.php");
         exit();
       }
       else {
@@ -22,9 +28,11 @@
     else {
       echo "<script> alert('Account not found'); </script>";
     }
+    $cmd->close();
   }
-
+  $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

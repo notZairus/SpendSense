@@ -1,3 +1,17 @@
+<?php
+  session_start();
+
+  if (!isset($_SESSION['AID'])) {
+    header("Location:./login.php");
+    exit();
+  }
+  
+  include "./configs/connection.php";
+  include "./configs/sidebar.php";
+  
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +23,7 @@
   <script defer src="../js/sidebar.js"></script>
 </head>
 <body>
+
   <aside>
     <img src="../assets/arrow-double-end-svgrepo-com.svg" alt="menu-icon" id="arrow">
     <h1>SpendSense</h1>
@@ -35,9 +50,15 @@
         <p>Transaction</p>
       </li>
     </ul>
+    <div class="user-profile">
+      <img src="" alt="" id="profile-pic" class="profile-pic">
+      <p class="name" id="name"><?php echo $name?></p>
+    </div>
   </aside>
+
   <section>
 
   </section>
+
 </body>
 </html>
