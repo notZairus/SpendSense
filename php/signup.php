@@ -7,8 +7,10 @@
     
     $hashed = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
+    $null = NULL;
     $cmd = $conn->prepare("INSERT INTO account_tbl (FirstName, MiddleName, LastName, Username, Pw, ProfileImage) VALUES (?, ?, ?, ?, ?, ?)");
-    $cmd->bind_param("sssssb", $_POST['firstname'], $_POST['middlename'], $_POST['lastname'], $_POST['username'], $hashed, $imageData);
+    $cmd->bind_param("sssssb", $_POST['firstname'], $_POST['middlename'], $_POST['lastname'], $_POST['username'], $hashed, $null);
+    $cmd->send_long_data(5, $imageData);
     $cmd->execute();
     
     $cmd->close();
@@ -35,7 +37,7 @@
       <div class="if-cont">
         <div class="profile-pic-cont">
           <img src="../assets/notepad-svgrepo-com.svg" alt="" class="image-preview" id="image-preview">
-          <input type="file" name="profile-pic" id="profile-pic" style="display: none;">
+          <input type="file" name="profile-pic" id="profile-pic" style="display: none;" accept=".jpg">
           <button type="button" class="select-img" id="select-img">Select Image</button>
         </div>
         <div class="input-field">

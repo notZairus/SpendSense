@@ -1,14 +1,12 @@
 <?php
   session_start();
-
   if (!isset($_SESSION['AID'])) {
     header("Location:./login.php");
     exit();
   }
-  
+
   include "./configs/connection.php";
   include "./configs/sidebar.php";
-  
 ?>
 
 
@@ -51,7 +49,7 @@
       </li>
     </ul>
     <div class="user-profile">
-      <img src="" alt="" id="profile-pic" class="profile-pic">
+      <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($sidebar['ProfileImage']); ?>" alt="" id="profile-pic" class="profile-pic">
       <p class="name" id="name"><?php echo $name?></p>
     </div>
   </aside>
