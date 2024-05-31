@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
   session_start();
   if (!isset($_SESSION['AID'])) {
     header("Location:./login.php");
@@ -7,7 +7,7 @@
 
   include "./configs/connection.php";
   include "./configs/sidebar.php";
-?>
+?> -->
 
 
 <!DOCTYPE html>
@@ -18,6 +18,7 @@
   <title>SpendSense | Dashboard</title>
   <link rel="stylesheet" href="../css/general.css">
   <link rel="stylesheet" href="../css/sidebar.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
   <script defer src="../js/sidebar.js"></script>
 </head>
 <body>
@@ -55,7 +56,24 @@
   </aside>
 
   <section>
+    <h1>Dashboard</h1>
+    <main>
+      <div class="Income" id="Income">
 
+      </div>
+      <div class="Expense" id="Expense">
+        
+      </div>
+      <div class="Balance" id="Balance">
+
+      </div>
+      <div class="recent-transaction">
+
+      </div>
+      <div class="analytics">
+        
+      </div>
+    </main>
   </section>
 
 </body>

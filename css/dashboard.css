@@ -1,0 +1,17 @@
+
+section main {
+  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+main .recent-transaction {
+  grid-column: 4 / 6;
+  grid-row: 1 / -1;
+}
+
+main .analytics {
+  grid-column: 1 / 4;
+  grid-row: 2 / 5;
+}
