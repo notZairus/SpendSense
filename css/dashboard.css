@@ -80,11 +80,10 @@ main .recent-transaction {
 .transactions .transaction {
   border-radius: 50px;
   background-color: green;
-  height: 60px;
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
-  gap: 10px;
+  gap: 30px;
 }
 
 .transaction img {
@@ -93,12 +92,13 @@ main .recent-transaction {
 }
 
 .transaction .transaction-content {
-  height: 100%;
   padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   box-shadow: none;
+  text-align: center;
 }
 
 .transaction p {
@@ -109,6 +109,11 @@ main .recent-transaction {
 .transaction-name {
   font-weight: 600;
   font-size: 1.5rem;
+}
+
+.transaction .transaction-amount {
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
 

@@ -15,3 +15,10 @@
   }
 
   $cmd->close();
+
+  
+  $cmd2 = $conn->prepare("SELECT * FROM transaction_tbl WHERE AID = ? LIMIT 8");
+  $cmd2->bind_param("i", $_SESSION['AID']);
+  $cmd2->execute();
+  $result2 = $cmd2->get_result();
+

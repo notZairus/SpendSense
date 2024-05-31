@@ -85,17 +85,38 @@
           </h1>
         </div>
         <div class="transactions">
-          <div class="transaction">
+
+          <?php while($row2 = $result2->fetch_assoc()) { 
+            
+            $color = "green";
+
+            if ($row2['TransactionType'] == "Income") {
+              $color = "#08CE08";
+            }
+            else {
+              $color = "#FF0808";
+            }
+            ?>
+
+            
+
+          <div class="transaction" style="background-color: <?php echo $color ?>">
             <img src="../assets/analytics-svgrepo-com.svg" alt="category-icon">
             <div class="transaction-content">
               <p class="transaction-name">
-                Transaction 1
+                <?php echo $row2['TransactionName']?>
               </p>
-              <p class==category-name>
-                Foods and Beverages
+              <p class=category-name>
+              <?php echo $row2['Category']?>
               </p>
             </div>
+            <p class="transaction-amount">
+              ₱<?php echo $row2['Amount'] ?>
+            </p>
           </div>
+
+          <?php } ?>
+
         </div>
       </div>
 
