@@ -15,3 +15,26 @@ main .analytics {
   grid-column: 1 / 4;
   grid-row: 2 / 5;
 }
+
+main div {
+  padding: 10px;
+}
+
+.Income > h2,
+.Expense > h2,
+.Balance > h2 {
+  color: black;
+  margin: 0px;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.Income p,
+.Expense p,
+.Balance p {
+  color: black;
+  text-align: center;
+  font-weight: 500;
+  font-size: 2rem;
+  margin: 20px 0px;
+}

@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
   session_start();
   if (!isset($_SESSION['AID'])) {
     header("Location:./login.php");
@@ -6,8 +6,8 @@
   }
 
   include "./configs/connection.php";
-  include "./configs/sidebar.php";
-?> -->
+  include "./configs/user.php";
+?>
 
 
 <!DOCTYPE html>
@@ -50,7 +50,7 @@
       </li>
     </ul>
     <div class="user-profile">
-      <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($sidebar['ProfileImage']); ?>" alt="" id="profile-pic" class="profile-pic">
+      <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($userData['ProfileImage']); ?>" alt="" id="profile-pic" class="profile-pic">
       <p class="name" id="name"><?php echo $name?></p>
     </div>
   </aside>
@@ -59,13 +59,16 @@
     <h1>Dashboard</h1>
     <main>
       <div class="Income" id="Income">
-
+        <h2>INCOME</h2>
+        <p class="amount"><span>₱</span> <?php echo $userData['Income'] ?></p>
       </div>
       <div class="Expense" id="Expense">
-        
+        <h2>EXPENSE</h2>
+        <p class="amount"><span>₱</span> <?php echo $userData['Expense'] ?></p>
       </div>
       <div class="Balance" id="Balance">
-
+        <h2>BALANCE</h2>
+        <p class="amount"><span>₱</span> <?php echo $userData['Balance'] ?></p>
       </div>
       <div class="recent-transaction">
 

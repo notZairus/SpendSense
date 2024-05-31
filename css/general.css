@@ -8,8 +8,8 @@
 }
 
 body {
-  background-color: green;
   height: 100dvh;
+  background-color: green;
   display: flex;
   margin: 0px;
 }
