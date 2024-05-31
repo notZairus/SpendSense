@@ -38,3 +38,93 @@ main div {
   font-size: 2rem;
   margin: 20px 0px;
 }
+
+main .recent-transaction {
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding-top: 0px;
+}
+
+.recent-transaction .header {
+  height: 70px;
+  width: 100%;
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.recent-transaction .header svg {
+  height: 60%;
+}
+
+.recent-transaction .header h1 {
+  font-size: clamp(1rem 9vw 2rem);
+}
+
+.recent-transaction .transactions {
+  width: 90%;
+  height: 100%;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  gap: 10px;
+  overflow: auto;
+}
+
+.transactions .transaction {
+  border-radius: 50px;
+  background-color: green;
+  height: 60px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.transaction img {
+  height: 40px;
+  justify-self: end;
+}
+
+.transaction .transaction-content {
+  height: 100%;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: none;
+}
+
+.transaction p {
+  margin: 0px;
+  color: white;
+}
+
+.transaction-name {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+
+
+
+
+
+
+
+.analytics {
+  display: flex;
+  justify-content: center;
+}
+
+
+.analytics #myChart {
+  width: 100%;
+  height: 100%;
+}
