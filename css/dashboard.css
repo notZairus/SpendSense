@@ -1,6 +1,6 @@
 
 section main {
-  gap: 30px;
+  gap: 40px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
@@ -23,7 +23,7 @@ main div {
 .Income > h2,
 .Expense > h2,
 .Balance > h2 {
-  color: black;
+  color: white;
   margin: 0px;
   text-align: center;
   font-size: 2rem;
@@ -32,11 +32,25 @@ main div {
 .Income p,
 .Expense p,
 .Balance p {
-  color: black;
+  color: white;
   text-align: center;
   font-weight: 500;
   font-size: 2rem;
   margin: 20px 0px;
+}
+
+main .Income {
+  background-color: #08CE08;
+  color: white;
+}
+
+main .Expense {
+  background-color: #FF0808;
+  color: white;
+}
+
+main .Balance {
+  background-color: green;
 }
 
 main .recent-transaction {
