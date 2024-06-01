@@ -141,7 +141,7 @@
           $date = strtotime($row3['TransactionDate']);
           $day = date("l", $date);
 
-          $Transactions[] = array("Day" => $row3['TransactionDate'], "Amount" => $row3['Amount']);
+          $Transactions[] = array("Day" => $row3['TransactionDate'], "Amount" => $row3['Amount'], "Type" => $row3['TransactionType']);
         }
         
       ?>
@@ -156,31 +156,51 @@
   <script>
     let transactions = <?php echo json_encode($Transactions); ?>;
     let transactionDay = [];
-    let transactionAmount = [];
+    let Income = [];
+    let Expense = [];
     
     transactions.forEach(transaction => {
       transactionDay.push(transaction.Day);
-      transactionAmount.push(transaction.Amount);
+
+      if (transaction.Type == "Income") {
+        Income.push(transaction.Amount);
+        Expense.push(0);
+      }
+      else {
+        Income.push(0);
+        Expense.push(transaction.Amount);
+      }
     });
 
     const chart = document.querySelector("canvas");
 
     new Chart(chart, {
       type: 'line',
+      title: "Last",
       data: {
         labels: transactionDay,
         datasets: [{
-          label: '# of Votes',
-          data: transactionAmount,
+          label: "Income",
+          data: Income,
           borderWidth: 1,
-          backgroundColor: "lightgreen",
-          fill: true
+          backgroundColor: "#08CE08",
+          borderColor: "#08CE08",
+          borderWidth: 3
+        },
+        {
+          label: "Expense",
+          data: Expense,
+          borderWidth: 1,
+          backgroundColor: "#FF0808",
+          borderColor: "#FF0808",
+          borderWidth: 3
         }]
       },
       options: {
-        scales: {
-          y: {
-            beginAtZero: true
+        plugins: {
+          title: {
+            display: true,
+            text: "Last Week\'s Transactions"
           }
         }
       }
