@@ -127,6 +127,25 @@
         $cmd2->close();
       ?>
 
+      <?php
+
+        $cmd3 = $conn->prepare("SELECT * FROM transaction_tbl WHERE AID = ? AND TransactionDate >= DATE_SUB(CURDATE(), INTERVAL 1 WEEk) AND TransactionDate != CURDATE()");
+        $cmd3->bind_param("i", $userData['AID']);
+        $cmd3->execute();
+
+        $result3 = $cmd3->get_result();
+
+        $Transactions = [];
+
+        while($row3 = $result3->fetch_assoc()) {
+          $date = strtotime($row3['TransactionDate']);
+          $day = date("l", $date);
+
+          $Transactions[] = array("Day" => $row3['TransactionDate'], "Amount" => $row3['Amount']);
+        }
+        
+      ?>
+
       <div class="analytics">
         <canvas id="myChart"></canvas>
       </div>
@@ -134,5 +153,39 @@
     </main>
   </section>
 
+  <script>
+    let transactions = <?php echo json_encode($Transactions); ?>;
+    let transactionDay = [];
+    let transactionAmount = [];
+    
+    transactions.forEach(transaction => {
+      transactionDay.push(transaction.Day);
+      transactionAmount.push(transaction.Amount);
+    });
+
+    const chart = document.querySelector("canvas");
+
+    new Chart(chart, {
+      type: 'line',
+      data: {
+        labels: transactionDay,
+        datasets: [{
+          label: '# of Votes',
+          data: transactionAmount,
+          borderWidth: 1,
+          backgroundColor: "lightgreen",
+          fill: true
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+  </script>
 </body>
 </html>
