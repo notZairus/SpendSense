@@ -36,7 +36,7 @@ main .new-category {
 
 form {
   display: flex;
-  gap: 20px;
+  gap: 40px;
   align-items: center;
 }
 
@@ -72,6 +72,7 @@ form .name-container  {
   width: 80%;
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 
 .name-container input {
@@ -104,4 +105,17 @@ main .categories {
 
 .categories h1 {
   text-align: center;
+}
+
+.cat-type-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-items: start;
+}
+
+.ifgroup {
+  display: flex;
+  align-items: start;
+  justify-content: start;
 }

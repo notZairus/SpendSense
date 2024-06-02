@@ -45,23 +45,20 @@
         $selectedIcon = $_FILES['category-image']['tmp_name'];
         $IconData = file_get_contents($selectedIcon);
 
-        $cmd2 = $conn->prepare("INSERT INTO category_tbl (CategoryName, CategoryICon, CreatorAID) VALUES (?, ?, ?)");
-        $cmd2->bind_param("sbi", $_POST['category-name'], $null, $userData['AID']);
+        $cmd2 = $conn->prepare("INSERT INTO category_tbl (CategoryName, CategoryICon, CreatorAID, CategoryType) VALUES (?, ?, ?, ?)");
+        $cmd2->bind_param("sbis", $_POST['category-name'], $null, $userData['AID'], $_POST['category-type']);
         $cmd2->send_long_data(1, $IconData);
         
         if ($cmd2->execute()) {
           echo "<script> alert('Category created sucessfully!') </script>";
         }
-
+        $cmd2->close();
       }
-
     }
     else {
       echo "<script> alert('You must select an icon to create a new category'); </script>";
     }
   }
-
-
 ?>
 
 
@@ -130,6 +127,17 @@
             </div>
             <div class="name-container">
               <input type="text" name="category-name" placeholder="Category Name">
+              <div class="cat-type-cont">
+                <p>Category Type:</p>
+                <div class="ifgroup">
+                  <input type="radio" id="inc" name="category-type" value="Income" checked>
+                  <label for="inc">Income</label>
+                </div>
+                <div class="ifgroup">
+                  <input type="radio" id="exp" name="category-type" value="Expense">
+                  <label for="exp">Expense</label>
+                </div>
+              </div>
             </div>
             <button class="create-cat-btn" name="create-category" value="create-cat">Create Category</button>
           </form>
