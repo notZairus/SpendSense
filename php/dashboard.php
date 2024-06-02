@@ -127,85 +127,11 @@
         $cmd2->close();
       ?>
 
-      <?php
-
-        $cmd3 = $conn->prepare("SELECT * FROM transaction_tbl WHERE AID = ? AND TransactionDate >= DATE_SUB(CURDATE(), INTERVAL 1 WEEk) AND TransactionDate != CURDATE()");
-        $cmd3->bind_param("i", $userData['AID']);
-        $cmd3->execute();
-
-        $result3 = $cmd3->get_result();
-
-        $Transactions = [];
-
-        while($row3 = $result3->fetch_assoc()) {
-          $date = strtotime($row3['TransactionDate']);
-          $day = date("l", $date);
-
-          $Transactions[] = array("Day" => $row3['TransactionDate'], "Amount" => $row3['Amount'], "Type" => $row3['TransactionType']);
-        }
-        
-      ?>
-
       <div class="analytics">
         <canvas id="myChart"></canvas>
       </div>
 
     </main>
   </section>
-
-  <script>
-    let transactions = <?php echo json_encode($Transactions); ?>;
-    let transactionDay = [];
-    let Income = [];
-    let Expense = [];
-    
-    transactions.forEach(transaction => {
-      transactionDay.push(transaction.Day);
-
-      if (transaction.Type == "Income") {
-        Income.push(transaction.Amount);
-        Expense.push(0);
-      }
-      else {
-        Income.push(0);
-        Expense.push(transaction.Amount);
-      }
-    });
-
-    const chart = document.querySelector("canvas");
-
-    new Chart(chart, {
-      type: 'line',
-      title: "Last",
-      data: {
-        labels: transactionDay,
-        datasets: [{
-          label: "Income",
-          data: Income,
-          borderWidth: 1,
-          backgroundColor: "#08CE08",
-          borderColor: "#08CE08",
-          borderWidth: 3
-        },
-        {
-          label: "Expense",
-          data: Expense,
-          borderWidth: 1,
-          backgroundColor: "#FF0808",
-          borderColor: "#FF0808",
-          borderWidth: 3
-        }]
-      },
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: "Last Week\'s Transactions"
-          }
-        }
-      }
-    });
-
-  </script>
 </body>
 </html>

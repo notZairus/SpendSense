@@ -18,9 +18,11 @@
   <title>SpendSense | Category</title>
   <link rel="stylesheet" href="../css/general.css">
   <link rel="stylesheet" href="../css/sidebar.css">
+  <link rel="stylesheet" href="../css/category.css">
 
   
   <script defer src="../js/sidebar.js"></script>
+  <script defer src="../js/category.js"></script>
 </head>
 <body>
 
@@ -62,7 +64,25 @@
   <section>
     <h1>Category</h1>
     <main>
-      
+      <div class="new-category">
+        <h1>New Category</h1>
+        <div class="form-wrapper">
+          <form action="" method="POST">
+            <div class="image-container">
+              <img src="../assets/arrow-double-end-svgrepo-com.svg" alt="new-category-image">
+              <input type="file" id="category-image-input" name="category-image" style="display: none;" accept=".svg">
+              <button type="button" id="catimg-btn">Select Category Icon</button>
+            </div>
+            <div class="name-container">
+              <input type="text" name="category-name" placeholder="Category Name">
+            </div>
+            <button class="create-cat-btn">Create Category</button>
+          </form>
+        </div>
+      </div>
+      <div class="categories">
+        <h1>Categories</h1>
+      </div>
     </main>
   </section>
 
