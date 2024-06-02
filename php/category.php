@@ -14,19 +14,53 @@
 
     if($_FILES['category-image']['error'] === UPLOAD_ERR_OK) {
 
-      $categoryIcon = $_FILES['category-image']['tmp_name'];
-      $categoryIconData = file_get_contents($categoryIcon);
+      $exist = false;
 
-      $command = $conn->prepare("INSERT INTO Category_tbl (CategoryName, CategoryIcon, CreatorAID) VALUES (?, ?, ?)");
-      $command->bind_param("sbi", $_POST['category-name'], $null, $userData['AID']);
-      $command->send_long_data(1, $categoryIconData);
-      $command->execute();
+      //CHECK IF THE CATEGORY IS A DEFAULT ONE.
+      $default = $conn->prepare("SELECT COUNT(*) as count FROM category_tbl WHERE CreatorAID = 0 AND CategoryName = ?");
+      $default->bind_param("s", $_POST['category-name']);
+      $default->execute();
+      $result = $default->get_result();
+      $row1 = $result->fetch_assoc();
+      if ($row1['count'] != 0) {
+        $exist = true;
+        echo "<script> alert('This is a default category') </script>";
+      }
+      $default->close();
+
+      //CHECK IF THE CATEGORY ALREADY EXIST.
+      $cmd = $conn->prepare("SELECT COUNT(*) as count FROM category_tbl WHERE CreatorAID = ? AND CategoryName = ?");
+      $cmd->bind_param("is", $userData['AID'], $_POST['category-name']);
+      $cmd->execute();
+      $result = $cmd->get_result();
+      $row2 = $result->fetch_assoc();
+      if ($row2['count'] != 0) {
+        $exist = true;
+        echo "<script> alert('This is an existing category') </script>";
+      }
+      $cmd->close();
+
+      //IF IT DOESN'T EXIST, INSERT IT ON DATABASE
+      if (!$exist) {
+        $selectedIcon = $_FILES['category-image']['tmp_name'];
+        $IconData = file_get_contents($selectedIcon);
+
+        $cmd2 = $conn->prepare("INSERT INTO category_tbl (CategoryName, CategoryICon, CreatorAID) VALUES (?, ?, ?)");
+        $cmd2->bind_param("sbi", $_POST['category-name'], $null, $userData['AID']);
+        $cmd2->send_long_data(1, $IconData);
+        
+        if ($cmd2->execute()) {
+          echo "<script> alert('Category created sucessfully!') </script>";
+        }
+
+      }
 
     }
     else {
       echo "<script> alert('You must select an icon to create a new category'); </script>";
     }
   }
+
 
 ?>
 
