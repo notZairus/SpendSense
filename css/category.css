@@ -1,8 +1,8 @@
 
 section main {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   gap: 30px;
 }
 
@@ -18,17 +18,10 @@ main div h1 {
 
 main .new-category {
   color: white;
-  grid-column: 4 / -1;
-  grid-row: 1 / auto;
+  grid-column: 3 / 6;
+  grid-row: 5 / -1;
   background-color: green;
   box-sizing: content-box;
-}
-
-main .categories {
-  color: green;
-  grid-column: 1 / 4;
-  grid-row: 1 / -1;
-  z-index: 1;
 }
 
 .new-category div {
@@ -99,4 +92,16 @@ form .name-container  {
   border-radius: 20px;
   height: 80px;
   border: 1px solid white;
+}
+
+
+main .categories {
+  color: green;
+  grid-column: 1 / -1;
+  grid-row: 1 / 5;
+  z-index: 1;
+}
+
+.categories h1 {
+  text-align: center;
 }

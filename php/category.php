@@ -1,13 +1,34 @@
-<!-- <?php
+<?php
+
   session_start();
+
+  include "./configs/connection.php";
+  include "./configs/user.php";
+
   if (!isset($_SESSION['AID'])) {
     header("Location:./login.php");
     exit();
   }
 
-  include "./configs/connection.php";
-  include "./configs/user.php";
-?> -->
+  if (isset($_POST['create-category'])) {
+
+    if($_FILES['category-image']['error'] === UPLOAD_ERR_OK) {
+
+      $categoryIcon = $_FILES['category-image']['tmp_name'];
+      $categoryIconData = file_get_contents($categoryIcon);
+
+      $command = $conn->prepare("INSERT INTO Category_tbl (CategoryName, CategoryIcon, CreatorAID) VALUES (?, ?, ?)");
+      $command->bind_param("sbi", $_POST['category-name'], $null, $userData['AID']);
+      $command->send_long_data(1, $categoryIconData);
+      $command->execute();
+
+    }
+    else {
+      echo "<script> alert('You must select an icon to create a new category'); </script>";
+    }
+  }
+
+?>
 
 
 <!DOCTYPE html>
@@ -67,7 +88,7 @@
       <div class="new-category">
         <h1>New Category</h1>
         <div class="form-wrapper">
-          <form action="" method="POST">
+          <form action="" method="POST" enctype="multipart/form-data">
             <div class="image-container">
               <img src="../assets/arrow-double-end-svgrepo-com.svg" alt="new-category-image">
               <input type="file" id="category-image-input" name="category-image" style="display: none;" accept=".svg">
@@ -76,7 +97,7 @@
             <div class="name-container">
               <input type="text" name="category-name" placeholder="Category Name">
             </div>
-            <button class="create-cat-btn">Create Category</button>
+            <button class="create-cat-btn" name="create-category" value="create-cat">Create Category</button>
           </form>
         </div>
       </div>
