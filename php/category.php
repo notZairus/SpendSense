@@ -59,6 +59,15 @@
       echo "<script> alert('You must select an icon to create a new category'); </script>";
     }
   }
+
+  if(isset($_POST['delete-category'])) {
+    $cmd = $conn->prepare("DELETE FROM category_tbl WHERE CID = ?");
+    $cmd->bind_param("i", $_POST['delete-category']);
+    $cmd->execute();
+    
+    echo "<script> alert('Deleted Successfuly!') </script>";
+  }
+
 ?>
 
 
@@ -145,6 +154,83 @@
       </div>
       <div class="categories">
         <h1>Categories</h1>
+        <div class="category-type-cont">
+          <div class="category-type">
+            <h1>Income</h1>
+            <div class="existing-category-cont">
+
+            <?php
+              $cmd = $conn->prepare("SELECT * FROM category_tbl WHERE CategoryType = 'Income' AND CreatorAID = 0 OR CategoryType = 'Income' AND CreatorAID = ?");
+              $cmd->bind_param("s", $userData['AID']);
+              $cmd->execute();
+              $result = $cmd->get_result();
+
+              while($row = $result->fetch_assoc()) {
+            ?>
+
+              <div class="single-category">
+                <div class="category-content">
+                  <p><?php echo $row['CategoryName'] ?></p>
+                </div>
+
+                <?php if ($row['CreatorAID'] != 0) {
+                  echo
+                  "<div class='category-delete-button'>
+                    <form action='./category.php' method='POST'>
+                      <button name='delete-category' value='".$row['CID']."'>
+                        Delete Category
+                      </button>
+                    </form>
+                  </div>";
+                }?>
+
+                
+              </div>
+
+              <?php 
+                } 
+                $cmd->close();
+              ?>
+              
+            </div>
+          </div>
+          <div class="category-type">
+            <h1>Expense</h1>
+            <div class="existing-category-cont">
+
+              <?php
+                $cmd = $conn->prepare("SELECT * FROM category_tbl WHERE CategoryType = 'Expense' AND CreatorAID = 0 OR CategoryType = 'Expense' AND CreatorAID = ?");
+                $cmd->bind_param("s", $userData['AID']);
+                $cmd->execute();
+                $result = $cmd->get_result();
+
+                while($row = $result->fetch_assoc()) {
+              ?>
+
+              <div class="single-category">
+                <div class="category-content">
+                  <p><?php echo $row['CategoryName'] ?></p>
+                </div>
+
+                <?php if ($row['CreatorAID'] != 0) {
+                  echo
+                  "<div class='category-delete-button'>
+                    <form action='./category.php' method='post'>
+                      <button name='delete-category' value='".$row['CID']."'>
+                        Delete Category
+                      </button>
+                    </form>
+                  </div>";
+                }?>
+
+                  
+                </div>
+
+                <?php } ?>
+              
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </section>

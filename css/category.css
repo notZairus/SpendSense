@@ -119,3 +119,71 @@ main .categories {
   align-items: start;
   justify-content: start;
 }
+
+.categories {
+  display: flex;
+  flex-direction: column;
+}
+
+.categories div {
+  box-shadow: none;
+}
+
+.categories .category-type-cont {
+  flex: auto;
+  display: flex;
+  justify-content: space-evenly;
+  overflow: auto;
+}
+
+.category-type-cont > div {
+  flex: auto;
+  max-width: 40%;
+  background-color: whitesmoke;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.category-type-cont div h1 {
+  color: white;
+  font-size: 2rem;
+  background-color: green;
+  border-radius: 10px;
+  margin: 0px;
+}
+
+.existing-category-cont {
+  flex: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.existing-category-cont .single-category {
+  background-color: green;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.single-category .category-content {
+  width: 80%;
+}
+
+.single-category .category-content p {
+  text-align: center;
+  font-size: 140%;
+  margin: 0px;
+}
+
+.category-delete-button button {
+  background-color: white;
+  color: green;
+  font-size: 120%;
+  border: none;
+  border-radius: 10px;;
+}
