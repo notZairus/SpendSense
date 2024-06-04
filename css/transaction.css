@@ -1,0 +1,82 @@
+section {
+  display: flex;
+  flex-direction: column;
+}
+
+section main {
+  display: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main .form-wrapper {
+  width: 50%;
+  background-color: green;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 40px;
+  gap: 20px;
+} 
+
+.form-wrapper h1 {
+  margin: 0px;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.form-wrapper form {
+  flex: auto;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form .input-field {
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+form .input-field label {
+  font-size: 1.5rem;
+}
+
+form .input-field input {
+  font-size: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 10px;
+  border-radius: 10px;
+  outline: none;
+}
+
+form .input-field select {
+  border-radius: 10px;
+  font-size: 1.5rem;
+  padding: 7px 7px;
+}
+
+.input-field button {
+  background-color: green;
+  color: white;
+  font-size: 2rem;
+  padding: 5px 20px;
+  font-weight: 600;
+  border: 1px solid white;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.input-field button:hover {
+  background-color: rgb(2, 137, 2);
+}
+
+.input-field button:active  {
+  background-color: darkgreen;
+}

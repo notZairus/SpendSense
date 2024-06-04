@@ -10,6 +10,8 @@
     exit();
   }
 
+
+  //FOR CREATING CATEGORY
   if (isset($_POST['create-category'])) {
 
     if($_FILES['category-image']['error'] === UPLOAD_ERR_OK) {
@@ -59,7 +61,9 @@
       echo "<script> alert('You must select an icon to create a new category'); </script>";
     }
   }
+  
 
+  //FOR DELETING CATEGORY
   if(isset($_POST['delete-category'])) {
     $cmd = $conn->prepare("DELETE FROM category_tbl WHERE CID = ?");
     $cmd->bind_param("i", $_POST['delete-category']);
@@ -106,15 +110,19 @@
         </svg>
         <p style="color: darkgreen">Category</p>
       </li>
-      <li>
-        <svg class="icon" fill="#FFFFFF" width="800px" height="800px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
-          <g fill-rule="evenodd">
-              <path d="M1164.23 160.333h304.01v337.82L840.282 1126.11c-31.623 31.62-49.694 74.54-49.694 119.71v395.3h395.292c45.18 0 88.1-18.07 119.72-49.7l162.64-162.63V1867H0V160.333h329.104C351.069 98.19 410.335 53.667 480 53.667h533.33c69.67 0 128.93 44.523 150.9 106.666Zm-737.563 53.334c0-29.456 23.878-53.334 53.333-53.334h533.33c29.46 0 53.34 23.878 53.34 53.334v160H426.667v-160Z"/>
-              <path d="m1677.57 528.308 225.88 225.882c22.02 22.024 22.02 57.713 0 79.85l-677.65 677.65c-10.62 10.5-24.96 16.49-39.98 16.49H903.467v-282.36c0-15.02 5.986-29.36 16.489-39.87L1597.6 528.308c22.14-22.137 57.83-22.137 79.97 0Zm-129.55 209.28 146.03 146.033 89.56-89.562-146.03-146.033-89.56 89.562Z"/>
-          </g>
-        </svg>
-        <p>Transaction</p>
-      </li>
+
+      <a href="./transaction.php">
+        <li>
+          <svg class="icon" fill="#FFFFFF" width="800px" height="800px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+            <g fill-rule="evenodd">
+                <path d="M1164.23 160.333h304.01v337.82L840.282 1126.11c-31.623 31.62-49.694 74.54-49.694 119.71v395.3h395.292c45.18 0 88.1-18.07 119.72-49.7l162.64-162.63V1867H0V160.333h329.104C351.069 98.19 410.335 53.667 480 53.667h533.33c69.67 0 128.93 44.523 150.9 106.666Zm-737.563 53.334c0-29.456 23.878-53.334 53.333-53.334h533.33c29.46 0 53.34 23.878 53.34 53.334v160H426.667v-160Z"/>
+                <path d="m1677.57 528.308 225.88 225.882c22.02 22.024 22.02 57.713 0 79.85l-677.65 677.65c-10.62 10.5-24.96 16.49-39.98 16.49H903.467v-282.36c0-15.02 5.986-29.36 16.489-39.87L1597.6 528.308c22.14-22.137 57.83-22.137 79.97 0Zm-129.55 209.28 146.03 146.033 89.56-89.562-146.03-146.033-89.56 89.562Z"/>
+            </g>
+          </svg>
+          <p>Transaction</p>
+        </li>
+      </a>
+
     </ul>
     <div class="user-profile">
       <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($userData['ProfileImage']); ?>" alt="" id="profile-pic" class="profile-pic">
@@ -156,7 +164,7 @@
         <h1>Categories</h1>
         <div class="category-type-cont">
           <div class="category-type">
-            <h1>Income</h1>
+            <h1 style="background-color: #08CE08;">Income</h1>
             <div class="existing-category-cont">
 
             <?php
@@ -168,7 +176,7 @@
               while($row = $result->fetch_assoc()) {
             ?>
 
-              <div class="single-category">
+              <div class="single-category" style="background-color: #08CE08;">
                 <div class="category-content">
                   <p><?php echo $row['CategoryName'] ?></p>
                 </div>
@@ -195,7 +203,7 @@
             </div>
           </div>
           <div class="category-type">
-            <h1>Expense</h1>
+            <h1 style="background-color: #FF0808;">Expense</h1>
             <div class="existing-category-cont">
 
               <?php
@@ -207,7 +215,7 @@
                 while($row = $result->fetch_assoc()) {
               ?>
 
-              <div class="single-category">
+              <div class="single-category" style="background-color: #FF0808;">
                 <div class="category-content">
                   <p><?php echo $row['CategoryName'] ?></p>
                 </div>
