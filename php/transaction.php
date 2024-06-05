@@ -11,13 +11,26 @@
   }
 
   if (isset($_POST['new-transaction'])) {
-    $cmd=$conn->prepare("INSERT INTO transaction_tbl (TransactionName, TransactionAmount, AID, CID) VALUES (?, ?, ?, ?)");
-    $cmd->bind_param("siii", $_POST['transaction-name'], $_POST['transaction-amount'], $userData['AID'], $_POST['transaction-category']);
     
+    $category_id = $_POST['transaction-category-id'];
+    
+    $cmd = $conn->prepare("SELECT * FROM category_tbl WHERE CID = ?");
+    $cmd->bind_param("i", $category_id);
+    $cmd->execute();
+    $result = $cmd->get_result();
+    $cmd->close();
+    
+    $category = $result->fetch_assoc();
+
+    $cmd=$conn->prepare("INSERT INTO transaction_tbl (TransactionName, TransactionAmount, AID, CID, TransactionType, TransactionCategory, TransactionIcon) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $cmd->bind_param("siiissb", $_POST['transaction-name'], $_POST['transaction-amount'], $userData['AID'], $category['CID'], $category['CategoryType'], $category['CategoryName'], $null);
+    $cmd->send_long_data(6, $category['CategoryIcon']);
     if($cmd->execute()) {
       echo "<script> alert('Transaction added successfully!'); </script>";
     }
+
   }
+
 ?>
 
 
@@ -93,8 +106,8 @@
           </div>
 
           <div class="input-field">
-            <label for="transaction-category">Category:</label>
-            <select name="transaction-category" id="transaction-category" required>
+            <label for="transaction-category-id">Category:</label>
+            <select name="transaction-category-id" id="transaction-category-id" required>
 
               <?php
                 $cmd = $conn->prepare("SELECT * FROM category_tbl WHERE CreatorAID = 0 AND CategoryType = 'Income' OR CreatorAID = ? AND CategoryType = 'Income'");
