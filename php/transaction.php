@@ -10,6 +10,14 @@
     exit();
   }
 
+  if (isset($_POST['new-transaction'])) {
+    $cmd=$conn->prepare("INSERT INTO transaction_tbl (TransactionName, TransactionAmount, AID, CID) VALUES (?, ?, ?, ?)");
+    $cmd->bind_param("siii", $_POST['transaction-name'], $_POST['transaction-amount'], $userData['AID'], $_POST['transaction-category']);
+    
+    if($cmd->execute()) {
+      echo "<script> alert('Transaction added successfully!'); </script>";
+    }
+  }
 ?>
 
 
@@ -78,6 +86,12 @@
             <label for="transaction-name">Transaction Name:</label>
             <input type="text" id="transaction-name" name="transaction-name" required>
           </div>
+
+          <div class="input-field">
+            <label for="transaction-amount">Transaction Amount:</label>
+            <input type="number" id="transaction-amount" name="transaction-amount" required>
+          </div>
+
           <div class="input-field">
             <label for="transaction-category">Category:</label>
             <select name="transaction-category" id="transaction-category" required>
@@ -109,13 +123,14 @@
 
               <optgroup label="Expense">
                 <?php while($row = $result->fetch_assoc()) { ?>
+                  
                   <?php echo "<option value='".$row['CID']."'>".$row['CategoryName']."</option>" ?>
                 <?php } ?>
               </optgroup>
             </select>
           </div>
           <div class="input-field">
-            <button>Confirm Transaction</button>
+            <button name="new-transaction" value="new-transaction">Confirm Transaction</button>
           </div>
         </form>
       </div>
