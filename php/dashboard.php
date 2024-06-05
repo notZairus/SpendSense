@@ -94,30 +94,23 @@
 
           <?php while($row2 = $result2->fetch_assoc()) { 
             
-            $color = "green";
 
-            if ($row2['TransactionType'] == "Income") {
-              $color = "#08CE08";
-            }
-            else {
-              $color = "#FF0808";
-            }
             ?>
 
             
 
-          <div class="transaction" style="background-color: <?php echo $color ?>">
+          <div class="transaction" style="background-color: green">
             <img src="../assets/analytics-svgrepo-com.svg" alt="category-icon">
             <div class="transaction-content">
               <p class="transaction-name">
                 <?php echo $row2['TransactionName']?>
               </p>
               <p class=category-name>
-              <?php echo $row2['Category']?>
+              <?php echo $row2['CID']?>
               </p>
             </div>
             <p class="transaction-amount">
-              ₱<?php echo $row2['Amount'] ?>
+              ₱<?php echo $row2['TransactionAmount'] ?>
             </p>
           </div>
 
@@ -125,10 +118,6 @@
 
         </div>
       </div>
-
-      <?php
-        $cmd2->close();
-      ?>
 
       <div class="analytics">
         <canvas id="myChart"></canvas>

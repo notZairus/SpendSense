@@ -113,6 +113,7 @@ main .recent-transaction {
   align-items: center;
   box-shadow: none;
   text-align: center;
+  gap: 10px;
 }
 
 .transaction p {
