@@ -21,9 +21,10 @@
     $cmd->close();
     
     $category = $result->fetch_assoc();
+    $currentDate = date('Y-m-d');
 
-    $cmd=$conn->prepare("INSERT INTO transaction_tbl (TransactionName, TransactionAmount, AID, CID, TransactionType, TransactionCategory, TransactionIcon) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $cmd->bind_param("siiissb", $_POST['transaction-name'], $_POST['transaction-amount'], $userData['AID'], $category['CID'], $category['CategoryType'], $category['CategoryName'], $null);
+    $cmd=$conn->prepare("INSERT INTO transaction_tbl (TransactionName, TransactionAmount, AID, CID, TransactionType, TransactionCategory, TransactionIcon, TransactionDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $cmd->bind_param("siiissbs", $_POST['transaction-name'], $_POST['transaction-amount'], $userData['AID'], $category['CID'], $category['CategoryType'], $category['CategoryName'], $null, $currentDate);
     $cmd->send_long_data(6, $category['CategoryIcon']);
     if($cmd->execute()) {
       echo "<script> alert('Transaction added successfully!'); </script>";

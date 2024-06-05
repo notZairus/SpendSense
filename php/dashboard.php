@@ -93,10 +93,22 @@
         <div class="transactions">
 
           <?php 
+
+            $cmd2 = $conn->prepare("SELECT * FROM transaction_tbl WHERE AID = ? LIMIT 7");
+            $cmd2->bind_param("i", $_SESSION['AID']);
+            $cmd2->execute();
+            $result2 = $cmd2->get_result();
+          
             while($row2 = $result2->fetch_assoc()) { 
+
+              $color = "#08CE08";
+              if ($row2['TransactionType'] == "Expense") {
+                $color = "#FF0808";
+              }
+
           ?>
 
-          <div class="transaction" style="background-color: green">
+          <div class="transaction"  style="background-color: <?php echo $color ?>">
             <img src="data:image/svg+xml;charset=utf8;base64, <?php echo base64_encode($row2['TransactionIcon']) ?>" alt="category-icon">
             <div class="transaction-content">
               <p class="transaction-name">
@@ -111,10 +123,78 @@
             </p>
           </div>
 
-          <?php } ?>
+          <?php
+            } 
+            $cmd2->close();
+          ?>
 
         </div>
       </div>
+
+      <?php
+        $allTransactions = array();
+
+        $cmd = $conn->prepare("SELECT * FROM transaction_tbl WHERE TransactionDate >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK) AND AID = ? AND TransactionDate != CURDATE()");
+        $cmd->bind_param("i", $userData['AID']);
+        $cmd->execute();
+        $result = $cmd->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+          $date = new DateTime($row['TransactionDate']);
+          $day = $date->format('l');
+
+          $allTransactions[] = ["Day" => $day, "Amount" => $row['TransactionAmount'], "Type" => $row['TransactionType']];
+        }
+
+        $days = array();
+        $incomeAmounts = array(0);
+        $expenseAmounts = array(0);
+
+        if (!empty($allTransactions)) {
+          
+          //FILL THE $days, $incomeAmounts, $expenseAmounts
+          for ($i = 0; $i < count($allTransactions); $i++) {
+
+            if (!in_array($allTransactions[$i]['Day'], $days)) {
+              $days[] = $allTransactions[$i]['Day'];
+
+              if ($allTransactions[$i]['Type'] == 'Income') {
+                $incomeAmounts[] = $allTransactions[$i]['Amount'];
+              }
+              else {
+                $expenseAmounts[] = $allTransactions[$i]['Amount'];
+              }
+
+              if (count($incomeAmounts) > count($expenseAmounts)) {
+                $expenseAmounts[] = 0;
+              }
+              else if (count($incomeAmounts) < count($expenseAmounts)) {
+                $incomeAmounts[] = 0;
+              }
+            }
+            else {
+              if ($allTransactions[$i]['Type'] == 'Income') {
+                $incomeAmounts[count($incomeAmounts) - 1] += $allTransactions[$i]['Amount'];
+              }
+              else {
+                $expenseAmounts[count($expenseAmounts) - 1] += $allTransactions[$i]['Amount'];
+              }
+            }
+
+          }
+
+          //REMOVE THE FIRST INDEX OF AMOUNTS WHICH IS 0
+          array_shift($incomeAmounts);
+          array_shift($expenseAmounts);
+        }
+
+        $sortedTransactions = array();
+
+        for ($i = 0; $i < count($days); $i++) {
+          $sortedTransactions[] = ['Day' => $days[$i], "Income" => $incomeAmounts[$i], "Expense" => $expenseAmounts[$i]];
+        }
+
+      ?>
 
       <div class="analytics">
         <canvas id="myChart"></canvas>
@@ -122,5 +202,48 @@
 
     </main>
   </section>
+
+  <script>
+
+    let transactions = <?php echo json_encode($sortedTransactions); ?>;
+
+    let ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: transactions.map(transaction => {
+          return transaction.Day;
+        }),
+        datasets: [
+        {
+          label: "INCOME IN THE LAST " + transactions.length + " DAYS",
+          data: transactions.map(transaction => {
+          return transaction.Income;
+        }),
+          borderWidth: 2,
+          borderColor: "#08CE08",
+          backgroundColor: "#08CE08"
+        },
+        {
+          label: "EXPENSE IN THE LAST " + transactions.length + " DAYS",
+          data: transactions.map(transaction => {
+          return transaction.Expense;
+        }),
+          borderWidth: 2,
+          borderColor: "#FF0808",
+          backgroundColor: "#FF0808"
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+  </script>
 </body>
 </html>
