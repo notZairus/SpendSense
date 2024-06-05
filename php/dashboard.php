@@ -92,21 +92,26 @@
         </div>
         <div class="transactions">
 
-          <?php while($row2 = $result2->fetch_assoc()) { 
-            
+          <?php 
+            while($row2 = $result2->fetch_assoc()) { 
+              
+              $subcmd = $conn->prepare("SELECT * FROM category_tbl WHERE CID = ?");
+              $subcmd->bind_param("i", $row2['CID']);
+              $subcmd->execute();
+              $subresult = $subcmd->get_result();
+              $subcmd->close();
 
-            ?>
-
-            
+              $subrow = $subresult->fetch_assoc();
+          ?>
 
           <div class="transaction" style="background-color: green">
-            <img src="../assets/analytics-svgrepo-com.svg" alt="category-icon">
+            <img src="data:image/svg+xml;charset=utf8;base64, <?php echo base64_encode($subrow['CategoryIcon']) ?>" alt="category-icon">
             <div class="transaction-content">
               <p class="transaction-name">
                 <?php echo $row2['TransactionName']?>
               </p>
               <p class=category-name>
-              <?php echo $row2['CID']?>
+              <?php echo $subrow['CategoryName']?>
               </p>
             </div>
             <p class="transaction-amount">
